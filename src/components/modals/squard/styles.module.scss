@@ -151,4 +151,23 @@
 }
 
 @media (max-width: 700px) {
+  .box {
+    min-width: 360px;
+    width: 50%;
+
+    header {
+      h1 {
+        font-size: 20px;
+      }
+      .icon {
+        right: 10px;
+      }
+    }
+  }
+  .content-menu {
+    gap: 10px;
+  }
+  .content-player {
+    width: 90%;
+  }
 }

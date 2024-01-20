@@ -112,7 +112,6 @@ export default function Rank() {
     <div className={styles.container}>
       <Header />
       <main className={styles.main}>
-        <div className={styles.division} />
         <div className={styles["content-table"]}>
           <section className={styles.title}>
             <h1>Classificação</h1>

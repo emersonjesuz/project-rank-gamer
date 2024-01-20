@@ -9,6 +9,8 @@
 
 .main {
   display: flex;
+
+  justify-content: center;
   flex: 1;
   background-image: url("../../assets/WhatsApp Image 2024-01-19 at 13.04.25.jpeg");
   background-size: contain;
@@ -16,14 +18,12 @@
   background-position: center left;
   background-color: black;
 }
-.division {
-  // flex: 1;
-  background-color: rgba(0, 0, 0, 0.336);
-}
 
 .content-table {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex: 1;
 }
 
