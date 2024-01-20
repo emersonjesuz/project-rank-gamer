@@ -1,0 +1,42 @@
+@import "../../styles/color";
+@import "../../styles/fonts";
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  background-image: url("../../assets/WhatsApp Image 2024-01-19 at 13.04.25.jpeg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center left;
+  background-color: black;
+}
+.division {
+  // flex: 1;
+  background-color: rgba(0, 0, 0, 0.336);
+}
+
+.content-table {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: $cream-2;
+  h1 {
+    font-size: 40px;
+    font-family: $font-roboto;
+    font-weight: 700;
+    color: $cream-2;
+  }
+}

@@ -1,0 +1,81 @@
+@import "../../../../styles/color";
+@import "../../../../styles/fonts";
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 90%;
+  margin: 20px;
+  background-color: rgba(0, 0, 0, 0.781);
+  border: 1px solid $cream-2;
+}
+
+.header-table,
+.info,
+.first,
+.latest {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+  gap: 20px;
+  width: 100%;
+  padding-right: 20px;
+  border: 1px solid $cream-2;
+
+  span {
+    min-width: 60px;
+    padding-left: 10px;
+    font-family: $font-changa;
+  }
+}
+
+.header-table {
+  height: 50px;
+  padding-right: 20px;
+  border: 1px solid $cream-2;
+
+  span {
+    color: $cream-1;
+  }
+}
+
+.content-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+@mixin info-styles() {
+  span {
+    font-family: $font-changa;
+  }
+}
+.info,
+.first,
+.latest {
+  height: calc(100% / 12);
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+
+  @include info-styles();
+}
+
+.info {
+  span {
+    color: $cream-1;
+  }
+}
+
+.first {
+  span {
+    color: $orange-1;
+  }
+}
+
+.latest {
+  span {
+    color: $orange-3;
+  }
+}
