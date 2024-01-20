@@ -62,7 +62,7 @@ export default function Squard({ squard, setShowModal }: Props) {
         <div className={styles["content-menu"]}>
           <div className={styles.menu}>
             <span>RANK</span>
-            <span>1</span>
+            <span>{squard.position}</span>
           </div>
           <div className={styles.menu}>
             <span>ABATES</span>

@@ -1,10 +1,10 @@
-import { Component, ReactNode, useState } from "react";
-import Header from "./components/header";
+import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import styles from "./styles.module.scss";
-import Table from "./components/table";
-import { squardType } from "../../types";
 import Squard from "../../components/modals/squard";
+import { squardType } from "../../types";
+import Header from "./components/header";
+import Table from "./components/table";
+import styles from "./styles.module.scss";
 
 const squards: squardType[] = [
   {
