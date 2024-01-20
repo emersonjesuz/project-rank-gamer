@@ -79,3 +79,27 @@
     color: $orange-3;
   }
 }
+
+@media (max-width: 700px) {
+  .header-table,
+  .info,
+  .first,
+  .latest {
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 10px;
+    span {
+      padding-left: 10px;
+      padding-right: 10px;
+      min-width: 40px;
+
+      font-size: 10px;
+    }
+  }
+
+  .header-table {
+    padding-right: 0px;
+    padding-left: 0;
+    gap: 0px;
+  }
+}
