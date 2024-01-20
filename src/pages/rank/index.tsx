@@ -5,6 +5,7 @@ import { squardType } from "../../types";
 import Header from "./components/header";
 import Table from "./components/table";
 import styles from "./styles.module.scss";
+import Signin from "../../components/modals/sign-in";
 
 const squards: squardType[] = [
   {
@@ -107,10 +108,11 @@ const squards: squardType[] = [
 
 export default function Rank() {
   const [showModal, setShowModal] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header setShowSignup={setShowSignup} />
       <main className={styles.main}>
         <div className={styles["content-table"]}>
           <section className={styles.title}>
@@ -121,6 +123,7 @@ export default function Rank() {
         </div>
       </main>
       {showModal && <Squard squard={squards[0]} setShowModal={setShowModal} />}
+      {showSignup && <Signin setShowSignup={setShowSignup} />}
     </div>
   );
 }

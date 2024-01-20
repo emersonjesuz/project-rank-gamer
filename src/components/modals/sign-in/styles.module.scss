@@ -1,0 +1,62 @@
+@import "../../../styles/color";
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background-color: rgba(0, 0, 0, 0.726);
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 300px;
+  height: 200px;
+
+  background-color: black;
+  border: 1px solid $orange-3;
+  border-radius: 10px;
+
+  div {
+    display: flex;
+    width: 90%;
+    gap: 10px;
+  }
+
+  input,
+  button {
+    width: 90%;
+    height: 40px;
+    color: $orange-3;
+    border-radius: 10px;
+  }
+
+  input {
+    background-color: $cream-1;
+    padding-left: 12px;
+  }
+
+  button {
+    background-color: $orange-2;
+    color: $cream-1;
+    border: none;
+
+    cursor: pointer;
+
+    &:focus {
+      color: $cream-2;
+    }
+  }
+}

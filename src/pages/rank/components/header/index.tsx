@@ -2,8 +2,12 @@ import moment from "moment/moment";
 import "moment/locale/pt-br";
 import { HiUserCircle } from "react-icons/hi";
 import styles from "./styles.module.scss";
+import { Dispatch, SetStateAction } from "react";
+type props = {
+  setShowSignup: Dispatch<SetStateAction<boolean>>;
+};
 
-export default function Header() {
+export default function Header({ setShowSignup }: props) {
   return (
     <header className={styles.header}>
       <div className={styles["box-title"]}>
@@ -14,7 +18,12 @@ export default function Header() {
           Ultima Atualização{" "}
           <span>{moment().locale("pt-br").format("ddd / MM / YY")}</span>
         </h4>
-        <HiUserCircle className={styles.icon} color="#d84500" size={50} />
+        <HiUserCircle
+          onClick={() => setShowSignup(true)}
+          className={styles.icon}
+          color="#d84500"
+          size={50}
+        />
       </div>
     </header>
   );
