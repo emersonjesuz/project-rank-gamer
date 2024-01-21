@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { squardType } from "../../../types";
+import { playerType, squardType } from "../../../types";
 import styles from "./styles.module.scss";
 import { FaTimes } from "react-icons/fa";
 
@@ -8,32 +8,34 @@ type Props = {
   setShowModal: Dispatch<SetStateAction<boolean>>;
 };
 
-type playerType = {
-  id: number;
-  name: string;
-  kills: number;
-};
-
 const players: playerType[] = [
   {
     id: 1,
     name: "wilson",
     kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 1,
   },
   {
     id: 2,
     name: "wilson",
     kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 2,
   },
   {
     id: 3,
     name: "wilson",
     kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 3,
   },
   {
     id: 4,
     name: "wilson",
     kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 4,
   },
 ];
 

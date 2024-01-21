@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiViewGrid, HiUser } from "react-icons/hi";
 import Squard from "../../components/modals/squard";
-import { squardType } from "../../types";
+import { playerType, squardType } from "../../types";
 import Header from "./components/header";
 import Table from "./components/table";
 import styles from "./styles.module.scss";
@@ -106,9 +106,77 @@ const squards: squardType[] = [
   },
 ];
 
+const players: playerType[] = [
+  {
+    id: 1,
+    name: "wilson",
+    kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 1,
+  },
+  {
+    id: 2,
+    name: "wilson",
+    kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 2,
+  },
+  {
+    id: 3,
+    name: "wilson",
+    kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 3,
+  },
+  {
+    id: 4,
+    name: "wilson",
+    kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 4,
+  },
+  {
+    id: 5,
+    name: "wilson",
+    kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 5,
+  },
+  {
+    id: 6,
+    name: "wilson",
+    kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 6,
+  },
+  {
+    id: 7,
+    name: "wilson",
+    kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 7,
+  },
+  {
+    id: 8,
+    name: "wilson",
+    kills: 10,
+    squard: "agua de coco cassemiro",
+    position: 8,
+  },
+];
+
+type showTableTypes = {
+  active: boolean;
+  type: "mvp" | "squard";
+};
+
 export default function Rank() {
   const [showModal, setShowModal] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [showTable, setShowTable] = useState<showTableTypes>({
+    active: false,
+    type: "squard",
+  });
 
   return (
     <div className={styles.container}>
@@ -116,10 +184,23 @@ export default function Rank() {
       <main className={styles.main}>
         <div className={styles["content-table"]}>
           <section className={styles.title}>
-            <h1>Classificação</h1>
-            <HiOutlineExclamationCircle size={30} />
+            <button
+              onClick={() => setShowTable({ active: true, type: "squard" })}
+            >
+              Clasaificação <HiViewGrid size={30} />
+            </button>
+            <button onClick={() => setShowTable({ active: true, type: "mvp" })}>
+              MVP <HiUser size={30} />
+            </button>
           </section>
-          <Table squards={squards} setShowModal={setShowModal} />
+          {showTable && (
+            <Table
+              squards={squards}
+              players={players}
+              setShowModal={setShowModal}
+              type={showTable.type}
+            />
+          )}
         </div>
       </main>
       {showModal && <Squard squard={squards[0]} setShowModal={setShowModal} />}

@@ -6,3 +6,11 @@ export type squardType = {
   points: number;
   kills: number;
 };
+
+export type playerType = {
+  id: number;
+  name: string;
+  kills: number;
+  squard: string;
+  position: number;
+};
