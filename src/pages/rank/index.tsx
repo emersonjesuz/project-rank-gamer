@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { HiOutlineExclamationCircle, HiViewGrid, HiUser } from "react-icons/hi";
+import { HiUser, HiViewGrid } from "react-icons/hi";
+import Signin from "../../components/modals/sign-in";
 import Squard from "../../components/modals/squard";
 import { playerType, squardType } from "../../types";
 import Header from "./components/header";
 import Table from "./components/table";
 import styles from "./styles.module.scss";
-import Signin from "../../components/modals/sign-in";
 
 const squards: squardType[] = [
   {
