@@ -18,7 +18,12 @@ type rankTypes = {
   kills: number;
 };
 
-export default function Table({ squards, setShowModal, type, players }: Props) {
+export default function Table({
+  squards,
+  setShowModal,
+  type,
+  players,
+}: Readonly<Props>) {
   function stylesRank(position: number): string | undefined {
     const rank = styles.info;
 

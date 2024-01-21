@@ -39,7 +39,7 @@ const players: playerType[] = [
   },
 ];
 
-export default function Squard({ squard, setShowModal }: Props) {
+export default function Squard({ squard, setShowModal }: Readonly<Props>) {
   function player({ id, kills, name }: playerType) {
     return (
       <div className={styles["player"]} key={id}>
