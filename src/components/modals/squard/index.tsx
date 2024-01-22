@@ -100,7 +100,7 @@ export default function Squard({ squard, setShowModal }: Readonly<Props>) {
               <span>ABATES</span>
             </div>
             <div className={styles["info-player"]}>
-              {players.map((p) => player({ ...p }))}
+              {players.map((getPlayer) => player({ ...getPlayer }))}
             </div>
           </div>
         </div>

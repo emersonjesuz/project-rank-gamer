@@ -1,0 +1,29 @@
+@import "../../../../styles/color";
+.squard {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  height: 50px;
+  width: 95%;
+  padding: 0 10px;
+  gap: 10px;
+
+  background-color: $orange-3;
+  border-radius: 8px;
+
+  h5 {
+    font-size: 13px;
+    flex: 1;
+  }
+  span {
+    width: 50px;
+  }
+  button {
+    color: $cream-1;
+    background-color: transparent;
+    font-size: 20px;
+    border: none;
+    width: 30px;
+  }
+}

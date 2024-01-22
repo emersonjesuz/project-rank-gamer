@@ -1,0 +1,89 @@
+@import "../../../../../styles/color";
+.form-squard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+
+  width: 95%;
+
+  button {
+    width: 300px;
+    height: 30px;
+  }
+}
+
+.content-squard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+
+  border-bottom: 1px solid gray;
+  padding-bottom: 10px;
+  width: 95%;
+}
+
+.box-squard {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    color: $cream-1;
+  }
+  input {
+    background-color: $cream-1;
+    color: $orange-2;
+    padding-left: 8px;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+  }
+}
+
+.box-squard-maps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  span {
+    flex: 1;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  input {
+    width: 50px;
+    background-color: $cream-1;
+    color: $orange-2;
+    padding-left: 8px;
+    border: none;
+    border-radius: 5px;
+  }
+}
+
+.content-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 95%;
+
+  button {
+    width: 60px;
+    border-radius: 5px;
+    border: none;
+    background-color: $orange-1;
+    color: $cream-1;
+    cursor: pointer;
+  }
+
+  button:first-child {
+    background-color: $orange-2;
+    color: $cream-1;
+  }
+}

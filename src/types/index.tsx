@@ -10,7 +10,11 @@ export type squardType = {
 export type playerType = {
   id: number;
   name: string;
-  kills: number;
-  squard: string;
-  position: number;
+  kills?: number;
+  squard?: string;
+  position?: number;
+  bermuda?: number;
+  kalahari?: number;
+  purgatorio?: number;
+  active?: boolean;
 };
