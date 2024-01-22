@@ -11,10 +11,10 @@ type Props = {
 type rankTypes = {
   id: number;
   name: string;
-  squard?: string | null;
+  squard?: string;
   position: number;
-  booyar?: number | null;
-  points?: number | null;
+  booyar?: number;
+  points?: number;
   kills: number;
 };
 
@@ -24,7 +24,7 @@ export default function Table({
   type,
   players,
 }: Readonly<Props>) {
-  function stylesRank(position: number): string | undefined {
+  function stylesRank(position: number): string {
     const rank = styles.info;
 
     if (position < 4) return styles.first;
@@ -42,6 +42,8 @@ export default function Table({
     points,
     squard,
   }: rankTypes) {
+    console.log(position, name, booyar, id, kills, points, squard);
+
     return (
       <div
         onClick={() => setShowModal(true)}
@@ -50,11 +52,11 @@ export default function Table({
       >
         <span>{position}</span>
         <span style={{ flex: 1 }}>{name}</span>
-        {type === "mvp" && <span style={{ flex: 1 }}>{squard}</span>}
+        {type === "mvp" && <span style={{ flex: 1 }}>{squard || ""}</span>}
         {type === "squard" && (
           <>
-            <span style={{ color: "gray" }}>{points}</span>
-            <span>{booyar}</span>
+            <span style={{ color: "gray" }}>{points || 0}</span>
+            <span>{booyar || 0}</span>
           </>
         )}
         <span>{kills}</span>
@@ -80,7 +82,14 @@ export default function Table({
       </div>
       <div className={styles["content-info"]}>
         {type === "squard" && squards.map((squard) => rank({ ...squard }))}
-        {type === "mvp" && players.map((player) => rank({ ...player }))}
+        {type === "mvp" &&
+          players.map((player) =>
+            rank({
+              ...player,
+              kills: player.kills ?? 0,
+              position: player.position ?? 0,
+            })
+          )}
       </div>
     </div>
   );
