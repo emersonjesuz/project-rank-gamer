@@ -1,8 +1,11 @@
+import { HiArrowCircleLeft } from "react-icons/hi";
+import { useGlobalContext } from "../../context/dataSquardContext";
 import SquardConfig from "./components/squardConfig";
 import styles from "./styles.module.scss";
-import { HiArrowCircleLeft } from "react-icons/hi";
 
 export default function Config() {
+  const { dataSquard, countPlayer } = useGlobalContext();
+
   return (
     <div className={styles.container}>
       <div className={styles["content-header"]}>
@@ -12,16 +15,18 @@ export default function Config() {
         </div>
         <div className={styles["info-header"]}>
           <div>
-            <span>EQUIPE 1 / 12</span>
+            <span>EQUIPE {dataSquard.length} / 12</span>
           </div>
           <div>
-            <span>JOGADORES 1 / 60</span>
+            <span>JOGADORES {countPlayer} / 60</span>
           </div>
           <button>NOVA EQUIPE</button>
         </div>
       </div>
       <div className={styles["content-squard"]}>
-        <SquardConfig />
+        {dataSquard.map((data) => (
+          <SquardConfig {...data} />
+        ))}
       </div>
     </div>
   );

@@ -3,12 +3,13 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import Rank from "../pages/rank";
+import ContainerContext from "../layout";
 import Config from "../pages/config";
+import Rank from "../pages/rank";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
+    <Route element={<ContainerContext />}>
       <Route element={<Rank />} path="/" />
       <Route element={<Config />} path="/config" />
     </Route>

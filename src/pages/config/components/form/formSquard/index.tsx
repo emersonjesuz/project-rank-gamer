@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { HiFlag } from "react-icons/hi";
 import { playerType } from "../../../../../types";
 import BoxPlayer from "./components/boxPlayer";
 import styles from "./styles.module.scss";
+
+type props = {
+  playersInSquard: playerType[];
+  setPlayersInSquard: Dispatch<SetStateAction<playerType[]>>;
+  setShowFormPlayer: Dispatch<SetStateAction<boolean>>;
+};
 
 const initialPlayerKill = {
   bermuda: 0,
@@ -12,31 +18,14 @@ const initialPlayerKill = {
   kills: 0,
 };
 
-export default function FormSquard() {
+export default function FormSquard({
+  playersInSquard,
+  setPlayersInSquard,
+  setShowFormPlayer,
+}: Readonly<props>) {
   const [playerKill, setPlayerKill] = useState({
     ...initialPlayerKill,
   });
-
-  const [playersInSquard, setPlayersInSquard] = useState<playerType[]>([
-    {
-      bermuda: 0,
-      id: 1,
-      kalahari: 1,
-      name: "wilson",
-      purgatorio: 1,
-      kills: 2,
-      active: false,
-    },
-    {
-      bermuda: 0,
-      id: 2,
-      kalahari: 1,
-      name: "wilson",
-      purgatorio: 1,
-      kills: 2,
-      active: true,
-    },
-  ]);
 
   function countKillPlayer(id: number) {
     const count =
@@ -87,10 +76,7 @@ export default function FormSquard() {
             BERMUDA
             <HiFlag />
           </span>
-          <div>
-            <label htmlFor="bermuda1-squard">Kills</label>
-            <input id="bermuda1-squard" type="text" />
-          </div>
+
           <div>
             <label htmlFor="bermuda2-squard">Posição</label>
             <input id="bermuda2-squard" type="text" />
@@ -100,10 +86,7 @@ export default function FormSquard() {
           <span>
             PURGATORIO <HiFlag />
           </span>
-          <div>
-            <label htmlFor="purgatorio1-squard">Kills</label>
-            <input id="purgatorio1-squard" type="text" />
-          </div>
+
           <div>
             <label htmlFor="purgatorio2-squard">Posição</label>
             <input id="purgatorio2-squard" type="text" />
@@ -113,10 +96,7 @@ export default function FormSquard() {
           <span>
             KALAHARI <HiFlag />
           </span>
-          <div>
-            <label htmlFor="kalahari1-squard">Kills</label>
-            <input id="kalahari1-squard" type="text" />
-          </div>
+
           <div>
             <label htmlFor="kalahari2-squard">Posição</label>
             <input id="kalahari2-squard" type="text" />
@@ -134,7 +114,9 @@ export default function FormSquard() {
       ))}
 
       <div className={styles["content-buttons"]}>
-        <button>Cancelar</button>
+        <button type="button" onClick={() => setShowFormPlayer(false)}>
+          Cancelar
+        </button>
         <button>Salvar</button>
       </div>
     </form>

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { playerType } from "../../../../../../../types";
 import styles from "./styles.module.scss";
+import { FaUser, FaSkullCrossbones } from "react-icons/fa";
 
 type maps = {
   bermuda: number;
@@ -60,7 +61,14 @@ export default function BoxPlayer({
   return (
     <div key={player.id} className={styles["box-player"]}>
       <p>
-        {player.name} <span> kill: {player.kills}</span>
+        <span>
+          <FaUser /> {player.name}
+        </span>
+        <span>
+          {" "}
+          <FaSkullCrossbones />
+          Abates : {player.kills}
+        </span>
       </p>
       {player.active ? (
         <>
@@ -94,7 +102,7 @@ export default function BoxPlayer({
         </>
       ) : (
         <button type="button" onClick={() => activeEditePlayer(player.id)}>
-          edita
+          Editar
         </button>
       )}
     </div>

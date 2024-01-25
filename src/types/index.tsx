@@ -5,6 +5,7 @@ export type squardType = {
   booyar: number;
   points: number;
   kills: number;
+  players: playerType[];
 };
 
 export type playerType = {
@@ -17,4 +18,5 @@ export type playerType = {
   kalahari?: number;
   purgatorio?: number;
   active?: boolean;
+  squard_id: number;
 };

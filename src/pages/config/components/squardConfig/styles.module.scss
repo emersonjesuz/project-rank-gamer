@@ -6,6 +6,7 @@
 
   height: 50px;
   width: 95%;
+  margin-top: 20px;
   padding: 0 10px;
   gap: 10px;
 
@@ -17,7 +18,10 @@
     flex: 1;
   }
   span {
-    width: 50px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 60px;
   }
   button {
     color: $cream-1;
