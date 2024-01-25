@@ -1,13 +1,12 @@
 import {
-  createContext,
-  useContext,
   Dispatch,
   SetStateAction,
+  createContext,
+  useContext,
   useState,
-  useEffect,
 } from "react";
-import { playerType, squardType } from "../../types";
 import { squards } from "../../database";
+import { squardType } from "../../types";
 
 interface Props {
   children: React.ReactNode;

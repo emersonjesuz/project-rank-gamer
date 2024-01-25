@@ -4,7 +4,22 @@ import SquardConfig from "./components/squardConfig";
 import styles from "./styles.module.scss";
 
 export default function Config() {
-  const { dataSquard, countPlayer } = useGlobalContext();
+  const { dataSquard, countPlayer, setDataSquard } = useGlobalContext();
+
+  function newSquard() {
+    if (dataSquard.length >= 12) return;
+    dataSquard.push({
+      id: dataSquard.length + 1,
+      booyar: 0,
+      kills: 0,
+      name: "Editar nome ?",
+      players: [],
+      points: 0,
+      position: dataSquard.length + 1,
+    });
+
+    setDataSquard([...dataSquard]);
+  }
 
   return (
     <div className={styles.container}>
@@ -20,7 +35,9 @@ export default function Config() {
           <div>
             <span>JOGADORES {countPlayer} / 60</span>
           </div>
-          <button>NOVA EQUIPE</button>
+          <button type="button" onClick={() => newSquard()}>
+            NOVA EQUIPE
+          </button>
         </div>
       </div>
       <div className={styles["content-squard"]}>

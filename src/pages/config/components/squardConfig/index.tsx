@@ -10,9 +10,15 @@ type props = {
   players: playerType[];
   name: string;
   id: number;
+  points: number;
 };
 
-export default function SquardConfig({ players, name, id }: Readonly<props>) {
+export default function SquardConfig({
+  players,
+  name,
+  id,
+  points,
+}: Readonly<props>) {
   const [showFormPlayer, setShowFormPlayer] = useState(false);
   const [showNewPlayer, setShowNewPlayer] = useState(false);
   const [playersInSquard, setPlayersInSquard] = useState<playerType[]>([
@@ -27,7 +33,7 @@ export default function SquardConfig({ players, name, id }: Readonly<props>) {
           <FaUser /> {playersInSquard.length} / 5
         </span>
         <span>
-          <FaCubes /> 100
+          <FaCubes /> {points || 0}
         </span>
         <button type="button" onClick={() => setShowNewPlayer(!showNewPlayer)}>
           <HiPlus />

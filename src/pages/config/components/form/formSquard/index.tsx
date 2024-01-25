@@ -34,7 +34,7 @@ export default function FormSquard({
       playerKill.purgatorio +
       playerKill.kills;
 
-    playersInSquard.map((player) => {
+    playersInSquard.forEach((player) => {
       if (!count) {
         if (player.id === id) {
           player.active = false;
@@ -54,7 +54,7 @@ export default function FormSquard({
   }
 
   function activeEditePlayer(id: number) {
-    playersInSquard.map((player) => {
+    playersInSquard.forEach((player) => {
       if (player.id === id) {
         player.active = true;
       }
