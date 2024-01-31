@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { squards } from "../../database";
-import { squardType } from "../../types";
+import { playerType, squardType } from "../../types";
 
 interface Props {
   children: React.ReactNode;
@@ -18,6 +18,8 @@ interface ContextProps {
   getCountPlayer: () => number;
   countPlayer: number;
   setCountPlayer: Dispatch<SetStateAction<number>>;
+  dataPlayer: playerType[];
+  setDataPlayer: Dispatch<SetStateAction<playerType[]>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -26,16 +28,19 @@ const GlobalContext = createContext<ContextProps>({
   getCountPlayer: (): number => 0,
   countPlayer: 0,
   setCountPlayer: () => 0,
+  dataPlayer: [],
+  setDataPlayer: () => [],
 });
 
 export const GlobalContextProvider = ({ children }: Props) => {
-  const [dataSquard, setDataSquard] = useState<squardType[]>([...squards]);
+  const [dataSquard, setDataSquard] = useState<squardType[]>([]);
+  const [dataPlayer, setDataPlayer] = useState<playerType[]>([]);
   const [countPlayer, setCountPlayer] = useState<number>(getCountPlayer());
 
   function getCountPlayer(): number {
     let count = 0;
     dataSquard.forEach((squard) => {
-      count += squard.players.length;
+      count += squard.players?.length ?? 0;
     });
 
     return count;
@@ -47,6 +52,8 @@ export const GlobalContextProvider = ({ children }: Props) => {
     getCountPlayer,
     countPlayer,
     setCountPlayer,
+    dataPlayer,
+    setDataPlayer,
   };
 
   return (

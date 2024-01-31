@@ -1,13 +1,34 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { HiFlag } from "react-icons/hi";
 import { playerType } from "../../../../../types";
 import BoxPlayer from "./components/boxPlayer";
 import styles from "./styles.module.scss";
+import { useGlobalContext } from "../../../../../context/dataSquardContext";
+import apiRank from "../../../../../services/apiRank";
+import { act } from "react-dom/test-utils";
 
 type props = {
   playersInSquard: playerType[];
   setPlayersInSquard: Dispatch<SetStateAction<playerType[]>>;
   setShowFormPlayer: Dispatch<SetStateAction<boolean>>;
+  squardId: number;
+};
+
+type formTypes = {
+  name: string;
+  bermuda_position: number;
+  kalahari_position: number;
+  purgatorio_position: number;
+  id?: number;
+  kills: number;
 };
 
 const initialPlayerKill = {
@@ -17,59 +38,72 @@ const initialPlayerKill = {
   id: 0,
   kills: 0,
 };
+const initialForm: formTypes = {
+  name: "",
+  bermuda_position: 0,
+  kalahari_position: 0,
+  purgatorio_position: 0,
+  id: 0,
+  kills: 0,
+};
 
 export default function FormSquard({
   playersInSquard,
   setPlayersInSquard,
   setShowFormPlayer,
+  squardId,
 }: Readonly<props>) {
   const [playerKill, setPlayerKill] = useState({
     ...initialPlayerKill,
   });
+  const { dataSquard, setDataSquard } = useGlobalContext();
 
-  function countKillPlayer(id: number) {
-    const count =
-      playerKill.bermuda +
-      playerKill.kalahari +
-      playerKill.purgatorio +
-      playerKill.kills;
+  const [form, setForm] = useState<formTypes>({ ...initialForm });
 
-    playersInSquard.forEach((player) => {
-      if (!count) {
-        if (player.id === id) {
-          player.active = false;
-        }
-      }
-      if (player.id === playerKill.id) {
-        player.bermuda = playerKill.bermuda;
-        player.kalahari = playerKill.kalahari;
-        player.purgatorio = playerKill.purgatorio;
-        player.kills = count;
-        player.active = false;
-      }
-    });
-
-    setPlayerKill({ ...initialPlayerKill });
-    setPlayersInSquard([...playersInSquard]);
+  function handlerForm(e: ChangeEvent<HTMLInputElement>) {
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function activeEditePlayer(id: number) {
-    playersInSquard.forEach((player) => {
-      if (player.id === id) {
-        player.active = true;
+  async function updateSquard(event: FormEvent) {
+    event.preventDefault();
+    try {
+      if (!form.name || !form.name.trim()) return;
+      console.log(form);
+
+      const { data } = await apiRank.put(`/edit/${squardId}`, { ...form });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function getSquard() {
+    dataSquard.forEach((data) => {
+      if (data.id === squardId) {
+        setForm({ ...form, name: data.name });
       }
     });
-
-    setPlayerKill({ ...initialPlayerKill });
-    setPlayersInSquard([...playersInSquard]);
   }
+
+  useEffect(() => {
+    getSquard();
+  }, []);
 
   return (
-    <form className={styles["form-squard"]}>
+    <form
+      key={squardId}
+      className={styles["form-squard"]}
+      onSubmit={updateSquard}
+    >
       <div className={styles["content-squard"]}>
         <div className={styles["box-squard"]}>
           <label htmlFor="nameSquard">nome da equipe</label>
-          <input id="nameSquard" type="text" />
+          <input
+            id="nameSquard"
+            type="text"
+            value={form.name}
+            name="name"
+            onChange={(e) => handlerForm(e)}
+          />
         </div>
         <div className={styles["box-squard-maps"]}>
           <span>
@@ -79,7 +113,12 @@ export default function FormSquard({
 
           <div>
             <label htmlFor="bermuda2-squard">Posição</label>
-            <input id="bermuda2-squard" type="text" />
+            <input
+              id="bermuda2-squard"
+              type="number"
+              name="bermuda_position"
+              onChange={(e) => handlerForm(e)}
+            />
           </div>
         </div>
         <div className={styles["box-squard-maps"]}>
@@ -89,7 +128,12 @@ export default function FormSquard({
 
           <div>
             <label htmlFor="purgatorio2-squard">Posição</label>
-            <input id="purgatorio2-squard" type="text" />
+            <input
+              id="purgatorio2-squard"
+              type="number"
+              name="purgatorio_position"
+              onChange={(e) => handlerForm(e)}
+            />
           </div>
         </div>
         <div className={styles["box-squard-maps"]}>
@@ -99,17 +143,20 @@ export default function FormSquard({
 
           <div>
             <label htmlFor="kalahari2-squard">Posição</label>
-            <input id="kalahari2-squard" type="text" />
+            <input
+              id="kalahari2-squard"
+              type="number"
+              name="kalahari_position"
+              onChange={(e) => handlerForm(e)}
+            />
           </div>
         </div>
       </div>
       {playersInSquard.map((player) => (
         <BoxPlayer
           player={player}
-          playerKill={playerKill}
-          setPlayerKill={setPlayerKill}
-          countKillPlayer={countKillPlayer}
-          activeEditePlayer={activeEditePlayer}
+          setPlayersInSquard={setPlayersInSquard}
+          playersInSquard={playersInSquard}
         />
       ))}
 

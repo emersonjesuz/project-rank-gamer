@@ -2,15 +2,16 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { playerType } from "../../../../../types";
 import styles from "./styles.module.scss";
 import { useGlobalContext } from "../../../../../context/dataSquardContext";
+import apiRank from "../../../../../services/apiRank";
 
 type props = {
   playersInSquard: playerType[];
   setPlayersInSquard: Dispatch<SetStateAction<playerType[]>>;
-  squardId: number;
+  squard_id: number;
 };
 
 export default function NewPlayer({
-  squardId,
+  squard_id,
   playersInSquard,
   setPlayersInSquard,
 }: Readonly<props>) {
@@ -18,38 +19,35 @@ export default function NewPlayer({
     useGlobalContext();
   const [name, setName] = useState("");
 
-  function addNewPlayer() {
-    if (!name) {
-      return;
-    }
-
-    const players = [...playersInSquard];
-
-    if (players.length >= 5 || countPlayer >= 60) return;
-
-    players.push({
-      id: players.length + 1,
-      name,
-      active: false,
-      bermuda: 0,
-      kalahari: 0,
-      purgatorio: 0,
-      kills: 0,
-      squard_id: squardId,
-    });
-
-    setPlayersInSquard(players);
-
-    dataSquard.forEach((squard) => {
-      if (squard.id === squardId) {
-        squard.players = [...playersInSquard];
+  async function addNewPlayer() {
+    try {
+      if (!name) {
+        return;
       }
-    });
 
-    setDataSquard([...dataSquard]);
-    setCountPlayer(countPlayer + 1);
+      const players = [...playersInSquard];
 
-    setName("");
+      if (players.length >= 5 || countPlayer >= 60) return;
+
+      const { data } = await apiRank.post("/player/create", {
+        name,
+        squard_id,
+      });
+
+      setPlayersInSquard([data, ...players]);
+      dataSquard.forEach((squard) => {
+        if (squard.id === squard_id) {
+          squard.players = [data, ...playersInSquard];
+        }
+      });
+
+      setDataSquard([...dataSquard]);
+      setCountPlayer(countPlayer + 1);
+
+      setName("");
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div className={styles.container}>

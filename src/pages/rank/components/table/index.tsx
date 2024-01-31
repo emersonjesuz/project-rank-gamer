@@ -42,8 +42,6 @@ export default function Table({
     points,
     squard,
   }: rankTypes) {
-    console.log(position, name, booyar, id, kills, points, squard);
-
     return (
       <div
         onClick={() => setShowModal(true)}
@@ -81,13 +79,16 @@ export default function Table({
         <span>ABATES</span>
       </div>
       <div className={styles["content-info"]}>
-        {type === "squard" && squards.map((squard) => rank({ ...squard }))}
+        {type === "squard" &&
+          squards.map((squard, index) =>
+            rank({ ...squard, position: index + 1 })
+          )}
         {type === "mvp" &&
-          players.map((player) =>
+          players.map((player, index) =>
             rank({
               ...player,
               kills: player.kills ?? 0,
-              position: player.position ?? 0,
+              position: index + 1,
             })
           )}
       </div>

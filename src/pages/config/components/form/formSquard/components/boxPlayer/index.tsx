@@ -1,60 +1,77 @@
-import { Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { FaSkullCrossbones, FaUser } from "react-icons/fa";
+import apiRank from "../../../../../../../services/apiRank";
 import { playerType } from "../../../../../../../types";
 import styles from "./styles.module.scss";
-import { FaUser, FaSkullCrossbones } from "react-icons/fa";
-
-type maps = {
-  bermuda: number;
-  kalahari: number;
-  purgatorio: number;
-  id: number;
-  kills: number;
-};
 
 type props = {
   player: playerType;
-  playerKill: maps;
-  setPlayerKill: Dispatch<SetStateAction<maps>>;
-  countKillPlayer: (id: number) => void;
-  activeEditePlayer: (id: number) => void;
+  setPlayersInSquard: Dispatch<SetStateAction<playerType[]>>;
+  playersInSquard: playerType[];
+};
+
+const initialPlayer = {
+  name: "",
+  bermuda_kills: 0,
+  purgatorio_kills: 0,
+  kalahari_kills: 0,
 };
 
 export default function BoxPlayer({
   player,
-  playerKill,
-  setPlayerKill,
-  countKillPlayer,
-  activeEditePlayer,
-}: props) {
-  function checkInput(
-    purgatorio: number,
-    bermuda: number,
-    kalahari: number,
-    id: number
-  ) {
-    if (id !== player.id) return;
+  playersInSquard,
+  setPlayersInSquard,
+}: Readonly<props>) {
+  const [form, setForm] = useState(initialPlayer);
+  const [showDeletePlayer, setShowDeletePlayer] = useState(false);
 
-    if (purgatorio) {
-      setPlayerKill({
-        ...playerKill,
-        purgatorio: purgatorio,
-        id: player.id,
-        kills: player.kills || 0,
+  function handlerForm(e: ChangeEvent<HTMLInputElement>) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  async function updatePlayer() {
+    try {
+      const newForm = {
+        bermuda_kills: +form.bermuda_kills,
+        purgatorio_kills: +form.purgatorio_kills,
+        kalahari_kills: +form.kalahari_kills,
+        name: !form.name ? player.name : form.name,
+      };
+
+      console.log(newForm);
+      const { data } = await apiRank.put(`/player/edit/${player.id}`, {
+        ...newForm,
       });
-    } else if (bermuda) {
-      setPlayerKill({
-        ...playerKill,
-        bermuda: bermuda,
-        id: player.id,
-        kills: player.kills || 0,
-      });
-    } else {
-      setPlayerKill({
-        ...playerKill,
-        kalahari: kalahari,
-        id: player.id,
-        kills: player.kills || 0,
-      });
+
+      const newList = playersInSquard.filter((player) => player.id !== data.id);
+      newList.push({ ...data, active: false });
+
+      setForm({ ...initialPlayer });
+      setPlayersInSquard([...newList]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function activeEditePlayer(id: number) {
+    playersInSquard.forEach((player) => {
+      if (player.id === id) {
+        player.active = true;
+      }
+    });
+
+    setPlayersInSquard([...playersInSquard]);
+  }
+
+  async function deletePlayer() {
+    try {
+      const { data } = await apiRank.delete(`/player/delete/${player.id}`);
+      const newList = playersInSquard.filter((player) => player.id !== data.id);
+
+      setPlayersInSquard([...newList]);
+      setShowDeletePlayer(false);
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -62,10 +79,19 @@ export default function BoxPlayer({
     <div key={player.id} className={styles["box-player"]}>
       <p>
         <span>
-          <FaUser /> {player.name}
+          {!player.active ? (
+            <>
+              <FaUser /> {player.name}
+            </>
+          ) : (
+            <input
+              placeholder="novo nome"
+              name="name"
+              onChange={(e) => handlerForm(e)}
+            />
+          )}
         </span>
         <span>
-          {" "}
           <FaSkullCrossbones />
           Abates : {player.kills}
         </span>
@@ -77,7 +103,8 @@ export default function BoxPlayer({
             <input
               id="kill-player-b"
               type="number"
-              onChange={(e) => checkInput(0, +e.target.value, 0, player.id)}
+              name="bermuda_kills"
+              onChange={(e) => handlerForm(e)}
             />
           </div>
           <div>
@@ -85,7 +112,8 @@ export default function BoxPlayer({
             <input
               id="kill-player-p"
               type="number"
-              onChange={(e) => checkInput(+e.target.value, 0, 0, player.id)}
+              name="purgatorio_kills"
+              onChange={(e) => handlerForm(e)}
             />
           </div>
           <div>
@@ -93,17 +121,40 @@ export default function BoxPlayer({
             <input
               id="kill-player-k"
               type="number"
-              onChange={(e) => checkInput(0, 0, +e.target.value, player.id)}
+              name="kalahari_kills"
+              onChange={(e) => handlerForm(e)}
             />
           </div>
-          <button type="button" onClick={() => countKillPlayer(player.id)}>
+          <button type="button" onClick={() => updatePlayer()}>
             salvar
           </button>
         </>
+      ) : !showDeletePlayer ? (
+        <>
+          <button type="button" onClick={() => activeEditePlayer(player.id)}>
+            Editar
+          </button>
+          <button
+            style={{ background: "red", color: "white" }}
+            type="button"
+            onClick={() => setShowDeletePlayer(true)}
+          >
+            Excluir
+          </button>
+        </>
       ) : (
-        <button type="button" onClick={() => activeEditePlayer(player.id)}>
-          Editar
-        </button>
+        <>
+          <button
+            style={{ background: "red", color: "white" }}
+            type="button"
+            onClick={() => deletePlayer()}
+          >
+            SIM
+          </button>
+          <button type="button" onClick={() => setShowDeletePlayer(false)}>
+            NÂO
+          </button>
+        </>
       )}
     </div>
   );

@@ -1,0 +1,29 @@
+@import "../../../../../styles/color";
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+
+  width: 90%;
+  height: 100px;
+
+  color: rgb(241, 58, 58);
+
+  button {
+    width: 50px;
+    padding: 5px 0;
+    border-radius: 5px;
+    border: none;
+  }
+
+  #first-button {
+    background-color: $orange-1;
+    color: white;
+  }
+
+  #second-button {
+    background-color: $cream-2;
+    color: white;
+  }
+}
