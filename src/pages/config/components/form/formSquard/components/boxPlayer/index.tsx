@@ -38,16 +38,25 @@ export default function BoxPlayer({
         name: !form.name ? player.name : form.name,
       };
 
-      console.log(newForm);
       const { data } = await apiRank.put(`/player/edit/${player.id}`, {
         ...newForm,
       });
 
-      const newList = playersInSquard.filter((player) => player.id !== data.id);
-      newList.push({ ...data, active: false });
+      const newKill =
+        newForm.bermuda_kills +
+        newForm.kalahari_kills +
+        newForm.purgatorio_kills;
+      const index = playersInSquard.findIndex(
+        (player) => player.id === data.id
+      );
 
+      if (index === -1) return;
+
+      playersInSquard.splice(index, 1, { ...data, active: false, newKill });
+      console.log(data);
       setForm({ ...initialPlayer });
-      setPlayersInSquard([...newList]);
+      setPlayersInSquard([...playersInSquard]);
+      console.log(playersInSquard);
     } catch (error) {
       console.log(error);
     }

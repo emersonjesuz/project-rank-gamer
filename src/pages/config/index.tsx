@@ -3,10 +3,11 @@ import { useGlobalContext } from "../../context/dataSquardContext";
 import SquardConfig from "./components/squardConfig";
 import styles from "./styles.module.scss";
 import apiRank from "../../services/apiRank";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Config() {
-  const { dataSquard, countPlayer, setDataSquard } = useGlobalContext();
+  const { dataSquard, getCountPlayer, setDataSquard } = useGlobalContext();
+  const [players, setPlayers] = useState<number>(0);
 
   async function newSquard() {
     try {
@@ -37,6 +38,10 @@ export default function Config() {
     listSquard();
   }, []);
 
+  useEffect(() => {
+    setPlayers(getCountPlayer());
+  }, [dataSquard]);
+
   return (
     <div className={styles.container}>
       <div className={styles["content-header"]}>
@@ -49,7 +54,7 @@ export default function Config() {
             <span>EQUIPE {dataSquard.length} / 12</span>
           </div>
           <div>
-            <span>JOGADORES {countPlayer} / 60</span>
+            <span>JOGADORES {players} / 60</span>
           </div>
           <button type="button" onClick={() => newSquard()}>
             NOVA EQUIPE
@@ -59,6 +64,7 @@ export default function Config() {
       <div className={styles["content-squard"]}>
         {dataSquard.map((data) => (
           <SquardConfig
+            key={data.id}
             id={data.id}
             name={data.name}
             players={data.players ?? []}

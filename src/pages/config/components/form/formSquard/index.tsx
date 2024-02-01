@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { HiFlag } from "react-icons/hi";
-import { playerType } from "../../../../../types";
+import { playerType, squardType } from "../../../../../types";
 import BoxPlayer from "./components/boxPlayer";
 import styles from "./styles.module.scss";
 import { useGlobalContext } from "../../../../../context/dataSquardContext";
@@ -31,13 +31,6 @@ type formTypes = {
   kills: number;
 };
 
-const initialPlayerKill = {
-  bermuda: 0,
-  kalahari: 0,
-  purgatorio: 0,
-  id: 0,
-  kills: 0,
-};
 const initialForm: formTypes = {
   name: "",
   bermuda_position: 0,
@@ -53,9 +46,6 @@ export default function FormSquard({
   setShowFormPlayer,
   squardId,
 }: Readonly<props>) {
-  const [playerKill, setPlayerKill] = useState({
-    ...initialPlayerKill,
-  });
   const { dataSquard, setDataSquard } = useGlobalContext();
 
   const [form, setForm] = useState<formTypes>({ ...initialForm });
@@ -68,9 +58,50 @@ export default function FormSquard({
     event.preventDefault();
     try {
       if (!form.name || !form.name.trim()) return;
-      console.log(form);
+      console.log(playersInSquard);
 
-      const { data } = await apiRank.put(`/edit/${squardId}`, { ...form });
+      let kills = 0;
+      playersInSquard.forEach((player) => {
+        kills += player.newKill ?? 0;
+      });
+
+      const update = {
+        name: form.name,
+        kills,
+        bermuda_position:
+          +form.bermuda_position > 12
+            ? 12
+            : +form.bermuda_position < 1
+            ? 12
+            : +form.bermuda_position,
+        kalahari_position:
+          +form.kalahari_position > 12
+            ? 12
+            : +form.kalahari_position < 1
+            ? 12
+            : +form.kalahari_position,
+        purgatorio_position:
+          +form.purgatorio_position > 12
+            ? 12
+            : +form.purgatorio_position < 1
+            ? 12
+            : +form.purgatorio_position,
+      };
+      console.log(update);
+
+      const { data } = await apiRank.put(`/edit/${squardId}`, { ...update });
+      console.log(data);
+
+      const index = dataSquard.findIndex((squard) => squard.id === data.id);
+
+      if (index === -1) return;
+
+      dataSquard.splice(index, 1, data);
+
+      setForm({ ...initialForm });
+
+      setDataSquard([...dataSquard]);
+      setShowFormPlayer(false);
     } catch (error) {
       console.log(error);
     }
@@ -117,6 +148,7 @@ export default function FormSquard({
               id="bermuda2-squard"
               type="number"
               name="bermuda_position"
+              value={form.bermuda_position}
               onChange={(e) => handlerForm(e)}
             />
           </div>
@@ -132,6 +164,7 @@ export default function FormSquard({
               id="purgatorio2-squard"
               type="number"
               name="purgatorio_position"
+              value={form.purgatorio_position}
               onChange={(e) => handlerForm(e)}
             />
           </div>
@@ -147,6 +180,7 @@ export default function FormSquard({
               id="kalahari2-squard"
               type="number"
               name="kalahari_position"
+              value={form.kalahari_position}
               onChange={(e) => handlerForm(e)}
             />
           </div>

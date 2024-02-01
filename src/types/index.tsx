@@ -19,4 +19,5 @@ export type playerType = {
   purgatorio_kills: number[];
   active?: boolean;
   squard_id: number;
+  newKill?: number;
 };
