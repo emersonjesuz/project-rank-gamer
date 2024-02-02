@@ -6,10 +6,12 @@ import apiRank from "../../services/apiRank";
 import { useEffect, useState } from "react";
 import NotifyError from "../../utils/apiNotify";
 import notify from "../../utils/notify";
+import { useNavigate } from "react-router-dom";
 
 export default function Config() {
   const { dataSquard, getCountPlayer, setDataSquard } = useGlobalContext();
   const [players, setPlayers] = useState<number>(0);
+  const navegate = useNavigate();
 
   async function newSquard() {
     try {
@@ -47,7 +49,13 @@ export default function Config() {
   return (
     <div className={styles.container}>
       <div className={styles["content-header"]}>
-        <div className={styles.header}>
+        <div
+          onClick={() => {
+            localStorage.clear();
+            navegate("/");
+          }}
+          className={styles.header}
+        >
           <h1>FATOR MAC</h1>
           <HiArrowCircleLeft size={40} />
         </div>
