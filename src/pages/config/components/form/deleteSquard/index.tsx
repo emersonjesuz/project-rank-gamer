@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction } from "react";
 import styles from "./styles.module.scss";
 import apiRank from "../../../../../services/apiRank";
 import { useGlobalContext } from "../../../../../context/dataSquardContext";
+import NotifyError from "../../../../../utils/apiNotify";
+import notify from "../../../../../utils/notify";
 
 type props = {
   setShowDeleteSquard: Dispatch<
@@ -23,8 +25,9 @@ export default function DeleteSquard({
 
       setDataSquard([...newList]);
       setShowDeleteSquard({ ...showDeleteSquard, active: false });
+      notify("equipe excluida com sucesso", "success");
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
 

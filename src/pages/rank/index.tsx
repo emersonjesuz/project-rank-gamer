@@ -7,6 +7,7 @@ import apiRank from "../../services/apiRank";
 import Header from "./components/header";
 import Table from "./components/table";
 import styles from "./styles.module.scss";
+import NotifyError from "../../utils/apiNotify";
 
 type showTableTypes = {
   active: boolean;
@@ -28,7 +29,7 @@ export default function Rank() {
       const { data } = await apiRank.get("/list");
       setDataSquard([...data]);
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
   async function listPlayer() {
@@ -37,7 +38,7 @@ export default function Rank() {
 
       setDataPlayer([...data]);
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
 

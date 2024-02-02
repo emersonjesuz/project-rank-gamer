@@ -3,6 +3,8 @@ import { FaSkullCrossbones, FaUser } from "react-icons/fa";
 import apiRank from "../../../../../../../services/apiRank";
 import { playerType } from "../../../../../../../types";
 import styles from "./styles.module.scss";
+import NotifyError from "../../../../../../../utils/apiNotify";
+import notify from "../../../../../../../utils/notify";
 
 type props = {
   player: playerType;
@@ -53,12 +55,12 @@ export default function BoxPlayer({
       if (index === -1) return;
 
       playersInSquard.splice(index, 1, { ...data, active: false, newKill });
-      console.log(data);
+
       setForm({ ...initialPlayer });
       setPlayersInSquard([...playersInSquard]);
-      console.log(playersInSquard);
+      notify("jogador atualizado com sucesso", "success");
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
 
@@ -79,8 +81,9 @@ export default function BoxPlayer({
 
       setPlayersInSquard([...newList]);
       setShowDeletePlayer(false);
+      notify("jogador excluido com sucesso", "success");
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
 

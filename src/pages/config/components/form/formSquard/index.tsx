@@ -14,12 +14,14 @@ import styles from "./styles.module.scss";
 import { useGlobalContext } from "../../../../../context/dataSquardContext";
 import apiRank from "../../../../../services/apiRank";
 import { act } from "react-dom/test-utils";
+import NotifyError from "../../../../../utils/apiNotify";
+import notify from "../../../../../utils/notify";
 
 type props = {
   playersInSquard: playerType[];
   setPlayersInSquard: Dispatch<SetStateAction<playerType[]>>;
   setShowFormPlayer: Dispatch<SetStateAction<boolean>>;
-  squardId: number;
+  squard_id: number;
 };
 
 type formTypes = {
@@ -44,7 +46,7 @@ export default function FormSquard({
   playersInSquard,
   setPlayersInSquard,
   setShowFormPlayer,
-  squardId,
+  squard_id,
 }: Readonly<props>) {
   const { dataSquard, setDataSquard } = useGlobalContext();
 
@@ -57,8 +59,8 @@ export default function FormSquard({
   async function updateSquard(event: FormEvent) {
     event.preventDefault();
     try {
-      if (!form.name || !form.name.trim()) return;
-      console.log(playersInSquard);
+      if (!form.name || !form.name.trim())
+        return notify("informe o nome da equipe", "info");
 
       let kills = 0;
       playersInSquard.forEach((player) => {
@@ -87,10 +89,8 @@ export default function FormSquard({
             ? 12
             : +form.purgatorio_position,
       };
-      console.log(update);
 
-      const { data } = await apiRank.put(`/edit/${squardId}`, { ...update });
-      console.log(data);
+      const { data } = await apiRank.put(`/edit/${squard_id}`, { ...update });
 
       const index = dataSquard.findIndex((squard) => squard.id === data.id);
 
@@ -101,15 +101,17 @@ export default function FormSquard({
       setForm({ ...initialForm });
 
       setDataSquard([...dataSquard]);
+
       setShowFormPlayer(false);
+      notify("equipe atualizada", "success");
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
 
   function getSquard() {
     dataSquard.forEach((data) => {
-      if (data.id === squardId) {
+      if (data.id === squard_id) {
         setForm({ ...form, name: data.name });
       }
     });
@@ -121,7 +123,7 @@ export default function FormSquard({
 
   return (
     <form
-      key={squardId}
+      key={squard_id}
       className={styles["form-squard"]}
       onSubmit={updateSquard}
     >

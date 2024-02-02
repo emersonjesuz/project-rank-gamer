@@ -3,6 +3,8 @@ import { playerType } from "../../../../../types";
 import styles from "./styles.module.scss";
 import { useGlobalContext } from "../../../../../context/dataSquardContext";
 import apiRank from "../../../../../services/apiRank";
+import notify from "../../../../../utils/notify";
+import NotifyError from "../../../../../utils/apiNotify";
 
 type props = {
   playersInSquard: playerType[];
@@ -21,9 +23,7 @@ export default function NewPlayer({
 
   async function addNewPlayer() {
     try {
-      if (!name) {
-        return;
-      }
+      if (!name) return notify("informe o nome do jogador", "info");
 
       const players = [...playersInSquard];
 
@@ -40,13 +40,12 @@ export default function NewPlayer({
           squard.players = [data, ...playersInSquard];
         }
       });
-
       setDataSquard([...dataSquard]);
       setCountPlayer(countPlayer + 1);
-
       setName("");
+      notify("jogador adicionado", "success");
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
   return (

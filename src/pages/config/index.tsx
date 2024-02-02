@@ -4,6 +4,8 @@ import SquardConfig from "./components/squardConfig";
 import styles from "./styles.module.scss";
 import apiRank from "../../services/apiRank";
 import { useEffect, useState } from "react";
+import NotifyError from "../../utils/apiNotify";
+import notify from "../../utils/notify";
 
 export default function Config() {
   const { dataSquard, getCountPlayer, setDataSquard } = useGlobalContext();
@@ -17,11 +19,11 @@ export default function Config() {
           dataSquard.length + Math.floor(Math.random() * 100)
         } ?`,
       });
-      console.log(data);
 
+      notify("equipe adicionada com sucesso ", "success");
       setDataSquard([data, ...dataSquard]);
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
 
@@ -30,7 +32,7 @@ export default function Config() {
       const { data } = await apiRank.get("/list");
       setDataSquard([...data]);
     } catch (error) {
-      console.log(error);
+      NotifyError(error);
     }
   }
 

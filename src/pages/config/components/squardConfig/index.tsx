@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { FaCubes, FaUser } from "react-icons/fa";
+import { HiOutlinePencil, HiOutlineTrash, HiPlus } from "react-icons/hi";
+import { playerType } from "../../../../types";
+import DeleteSquard from "../form/deleteSquard";
 import FormSquard from "../form/formSquard";
 import NewPlayer from "../form/newPlayer";
 import styles from "./styles.module.scss";
-import { HiOutlinePencil, HiPlus, HiOutlineTrash } from "react-icons/hi";
-import { FaUser, FaCubes } from "react-icons/fa";
-import { playerType } from "../../../../types";
-import DeleteSquard from "../form/deleteSquard";
 
 type props = {
   players: playerType[];
@@ -69,7 +69,8 @@ export default function SquardConfig({
       </div>
       {showFormPlayer && (
         <FormSquard
-          squardId={id}
+          key={id}
+          squard_id={id}
           playersInSquard={playersInSquard}
           setPlayersInSquard={setPlayersInSquard}
           setShowFormPlayer={setShowFormPlayer}
@@ -77,6 +78,7 @@ export default function SquardConfig({
       )}
       {showNewPlayer && (
         <NewPlayer
+          key={id}
           squard_id={id}
           playersInSquard={playersInSquard}
           setPlayersInSquard={setPlayersInSquard}
@@ -85,6 +87,7 @@ export default function SquardConfig({
 
       {showDeleteSquard.active && (
         <DeleteSquard
+          key={id}
           showDeleteSquard={showDeleteSquard}
           setShowDeleteSquard={setShowDeleteSquard}
         />
