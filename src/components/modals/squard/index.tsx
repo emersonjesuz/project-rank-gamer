@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function Squard({ setShowModal, showModal }: Readonly<Props>) {
-  const [squard, setSquard] = useState(showModal.squard);
+  const [squard] = useState(showModal.squard);
 
   function player({ id, kills, name }: playerType) {
     return (
