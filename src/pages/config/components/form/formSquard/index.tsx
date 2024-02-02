@@ -1,6 +1,5 @@
 import {
   ChangeEvent,
-  ChangeEventHandler,
   Dispatch,
   FormEvent,
   SetStateAction,
@@ -8,14 +7,13 @@ import {
   useState,
 } from "react";
 import { HiFlag } from "react-icons/hi";
-import { playerType, squardType } from "../../../../../types";
-import BoxPlayer from "./components/boxPlayer";
-import styles from "./styles.module.scss";
 import { useGlobalContext } from "../../../../../context/dataSquardContext";
 import apiRank from "../../../../../services/apiRank";
-import { act } from "react-dom/test-utils";
+import { playerType } from "../../../../../types";
 import NotifyError from "../../../../../utils/apiNotify";
 import notify from "../../../../../utils/notify";
+import BoxPlayer from "./components/boxPlayer";
+import styles from "./styles.module.scss";
 
 type props = {
   playersInSquard: playerType[];
