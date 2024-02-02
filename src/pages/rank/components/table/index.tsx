@@ -4,18 +4,16 @@ import styles from "./styles.module.scss";
 
 type Props = {
   squards: squardType[];
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  setShowModal: Dispatch<
+    SetStateAction<{ squard: squardType; active: boolean }>
+  >;
   type: "mvp" | "squard";
   players: playerType[];
 };
 type rankTypes = {
-  id: number;
-  name: string;
-  squard?: string;
-  position: number;
-  booyar?: number;
-  points?: number;
-  kills: number;
+  squard?: squardType;
+  player?: playerType;
+  index: number;
 };
 
 export default function Table({
@@ -33,31 +31,31 @@ export default function Table({
     return rank;
   }
 
-  function rank({
-    position,
-    name,
-    booyar,
-    id,
-    kills,
-    points,
-    squard,
-  }: rankTypes) {
+  function showModalSquard(squard: squardType) {
+    if (squard) {
+      setShowModal({ squard, active: true });
+    }
+  }
+
+  function rank({ player, squard, index }: rankTypes) {
     return (
       <div
-        onClick={() => setShowModal(true)}
-        key={id}
-        className={stylesRank(position)}
+        key={player ? player.id : squard?.id}
+        onClick={() => {
+          squard && showModalSquard(squard);
+        }}
+        className={stylesRank(index)}
       >
-        <span>{position}</span>
-        <span style={{ flex: 1 }}>{name}</span>
-        {type === "mvp" && <span style={{ flex: 1 }}>{squard || ""}</span>}
+        <span>{index}</span>
+        <span style={{ flex: 1 }}>{player ? player.name : squard?.name}</span>
+        {type === "mvp" && <span style={{ flex: 1 }}>{"??"}</span>}
         {type === "squard" && (
           <>
-            <span style={{ color: "gray" }}>{points || 0}</span>
-            <span>{booyar || 0}</span>
+            <span style={{ color: "gray" }}>{squard?.points}</span>
+            <span>{squard?.booyar}</span>
           </>
         )}
-        <span>{kills}</span>
+        <span>{player ? player.kills : squard?.kills}</span>
       </div>
     );
   }
@@ -80,15 +78,12 @@ export default function Table({
       </div>
       <div className={styles["content-info"]}>
         {type === "squard" &&
-          squards.map((squard, index) =>
-            rank({ ...squard, position: index + 1 })
-          )}
+          squards.map((squard, index) => rank({ squard, index: index + 1 }))}
         {type === "mvp" &&
           players.map((player, index) =>
             rank({
-              ...player,
-              kills: player.kills ?? 0,
-              position: index + 1,
+              player,
+              index: index + 1,
             })
           )}
       </div>

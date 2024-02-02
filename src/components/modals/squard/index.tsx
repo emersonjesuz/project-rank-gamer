@@ -1,45 +1,18 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 import { playerType, squardType } from "../../../types";
 import styles from "./styles.module.scss";
-import { FaTimes } from "react-icons/fa";
 
 type Props = {
-  squard: squardType;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  setShowModal: Dispatch<
+    SetStateAction<{ squard: squardType; active: boolean }>
+  >;
+  showModal: { squard: squardType; active: boolean };
 };
 
-const players: playerType[] = [
-  {
-    id: 1,
-    name: "wilson",
-    kills: 10,
-    squard: "agua de coco cassemiro",
-    position: 1,
-  },
-  {
-    id: 2,
-    name: "wilson",
-    kills: 10,
-    squard: "agua de coco cassemiro",
-    position: 2,
-  },
-  {
-    id: 3,
-    name: "wilson",
-    kills: 10,
-    squard: "agua de coco cassemiro",
-    position: 3,
-  },
-  {
-    id: 4,
-    name: "wilson",
-    kills: 10,
-    squard: "agua de coco cassemiro",
-    position: 4,
-  },
-];
+export default function Squard({ setShowModal, showModal }: Readonly<Props>) {
+  const [squard, setSquard] = useState(showModal.squard);
 
-export default function Squard({ squard, setShowModal }: Readonly<Props>) {
   function player({ id, kills, name }: playerType) {
     return (
       <div className={styles["player"]} key={id}>
@@ -49,49 +22,50 @@ export default function Squard({ squard, setShowModal }: Readonly<Props>) {
     );
   }
 
+  function countBooyar(list: number[]): number {
+    return list.filter((position) => position === 1).length;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.box}>
         <header>
-          <h1>agua de coco cassemiro</h1>
+          <h1>{squard.name}</h1>
           <FaTimes
             className={styles.icon}
             size={40}
-            onClick={() => setShowModal(false)}
+            onClick={() => setShowModal({ ...showModal, active: false })}
           />
         </header>
 
         <div className={styles["content-menu"]}>
-          <div className={styles.menu}>
-            <span>RANK</span>
-            <span>{squard.position}</span>
-          </div>
+          <div className={styles.menu}></div>
           <div className={styles.menu}>
             <span>ABATES</span>
-            <span>1</span>
+            <span>{squard.kills}</span>
           </div>
           <div className={styles.menu}>
             <span>BOOYAR</span>
-            <span>1</span>
+            <span>{squard.booyar}</span>
           </div>
           <div className={styles.menu}>
             <span>PONTOS</span>
-            <span>1</span>
+            <span>{squard.points}</span>
           </div>
         </div>
         <div className={styles["content-player"]}>
           <div className={styles["box-maps"]}>
             <div>
               <span>KALAHARI</span>
-              <span>12</span>
+              <span>{countBooyar(squard.kalahari_position)}</span>
             </div>
             <div>
               <span>PURGATORIO</span>
-              <span>34</span>
+              <span>{countBooyar(squard.purgatorio_position)}</span>
             </div>
             <div>
               <span>BERMUDA</span>
-              <span>33</span>
+              <span>{countBooyar(squard.bermuda_position)}</span>
             </div>
           </div>
           <div className={styles["box-player"]}>
@@ -100,7 +74,7 @@ export default function Squard({ squard, setShowModal }: Readonly<Props>) {
               <span>ABATES</span>
             </div>
             <div className={styles["info-player"]}>
-              {players.map((getPlayer) => player({ ...getPlayer }))}
+              {squard.players?.map((getPlayer) => player({ ...getPlayer }))}
             </div>
           </div>
         </div>

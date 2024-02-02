@@ -8,16 +8,35 @@ import Header from "./components/header";
 import Table from "./components/table";
 import styles from "./styles.module.scss";
 import NotifyError from "../../utils/apiNotify";
+import { squardType } from "../../types";
 
 type showTableTypes = {
   active: boolean;
   type: "mvp" | "squard";
 };
 
+type showModalTypes = {
+  squard: squardType;
+  active: boolean;
+};
+const initialSquard: squardType = {
+  booyar: 0,
+  id: 0,
+  bermuda_position: [],
+  kalahari_position: [],
+  kills: 0,
+  name: "",
+  points: 0,
+  purgatorio_position: [],
+  players: [],
+};
 export default function Rank() {
   const { setDataSquard, dataSquard, dataPlayer, setDataPlayer } =
     useGlobalContext();
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<showModalTypes>({
+    squard: { ...initialSquard },
+    active: false,
+  });
   const [showSignup, setShowSignup] = useState(false);
   const [showTable, setShowTable] = useState<showTableTypes>({
     active: false,
@@ -35,7 +54,6 @@ export default function Rank() {
   async function listPlayer() {
     try {
       const { data } = await apiRank.get("/player/list");
-
       setDataPlayer([...data]);
     } catch (error) {
       NotifyError(error);
@@ -72,8 +90,8 @@ export default function Rank() {
           )}
         </div>
       </main>
-      {showModal && (
-        <Squard squard={dataSquard[0]} setShowModal={setShowModal} />
+      {showModal.active && (
+        <Squard setShowModal={setShowModal} showModal={showModal} />
       )}
       {showSignup && <Signin setShowSignup={setShowSignup} />}
     </div>
