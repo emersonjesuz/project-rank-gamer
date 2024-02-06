@@ -1,8 +1,7 @@
-import moment from "moment/moment";
 import "moment/locale/pt-br";
+import { Dispatch, SetStateAction } from "react";
 import { HiUserCircle } from "react-icons/hi";
 import styles from "./styles.module.scss";
-import { Dispatch, SetStateAction } from "react";
 type props = {
   setShowSignup: Dispatch<SetStateAction<boolean>>;
 };
