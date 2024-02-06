@@ -14,10 +14,6 @@ export default function Header({ setShowSignup }: props) {
         <h1>Fator Mac</h1>
       </div>
       <div className={styles["box-info"]}>
-        <h4>
-          Ultima Atualização{" "}
-          <span>{moment().locale("pt-br").format("ddd / MM / YY")}</span>
-        </h4>
         <HiUserCircle
           onClick={() => setShowSignup(true)}
           className={styles.icon}

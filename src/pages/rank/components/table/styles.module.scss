@@ -103,3 +103,16 @@
     gap: 0px;
   }
 }
+@media (max-width: 400px) {
+  .header-table,
+  .info,
+  .first,
+  .latest {
+    span {
+      display: flex;
+      align-items: center;
+      min-height: 30px;
+      font-size: 10px;
+    }
+  }
+}

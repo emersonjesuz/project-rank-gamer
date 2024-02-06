@@ -74,7 +74,7 @@ export default function Rank() {
             <button
               onClick={() => setShowTable({ active: true, type: "squard" })}
             >
-              Clasaificação <HiViewGrid size={30} />
+              Classificação <HiViewGrid size={30} />
             </button>
             <button onClick={() => setShowTable({ active: true, type: "mvp" })}>
               MVP <HiUser size={30} />
