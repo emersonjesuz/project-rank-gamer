@@ -8,6 +8,19 @@
   margin: 20px;
   background-color: rgba(0, 0, 0, 0.781);
   border: 1px solid $cream-2;
+
+  animation: ShowTable forwards 3s;
+}
+
+@keyframes ShowTable {
+  0% {
+    opacity: 0;
+    height: 50px;
+  }
+  100% {
+    opacity: 1;
+    height: 90%;
+  }
 }
 
 .header-table,
@@ -76,7 +89,7 @@
 
 .latest {
   span {
-    color: $orange-3;
+    color: $cream-2;
   }
 }
 
@@ -111,7 +124,7 @@
     span {
       display: flex;
       align-items: center;
-      min-height: 30px;
+      min-height: 40px;
       font-size: 10px;
     }
   }

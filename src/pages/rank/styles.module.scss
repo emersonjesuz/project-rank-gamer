@@ -5,7 +5,8 @@
   flex-direction: column;
   width: 100vw;
   min-height: 100vh;
-  height: 100%;
+  background-color: black;
+  padding-bottom: 50px;
 }
 
 .main {
@@ -17,7 +18,6 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center left;
-  background-color: black;
 }
 
 .content-table {
@@ -58,12 +58,26 @@
 }
 
 @media (max-width: 700px) {
+  .main {
+    background-position: center top;
+  }
   .title {
     margin-top: 10px;
     button {
       font-size: 20px;
       justify-content: space-between;
       padding: 0 20px;
+    }
+  }
+}
+@media (max-width: 400px) {
+  .title {
+    margin-top: 10px;
+    button {
+      font-size: 20px;
+      justify-content: space-between;
+      padding: 0 20px;
+      width: 150px;
     }
   }
 }
