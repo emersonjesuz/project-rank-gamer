@@ -16,7 +16,7 @@ Este projeto foi desenvolvido para facilitar o cadastro de equipes e jogadores, 
 - **Frontend:** React.js
 - **Backend:** Node.js (Express) ou outra tecnologia para API e gerenciamento de dados
 - **Banco de Dados:** Postgress
-- **Estilização:** Tailwind CSS 
+- **Estilização:** SaaS CSS 
 
 
 ## Instalação
